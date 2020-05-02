@@ -5,11 +5,12 @@
 (function () {
   'use strict'
 
-  if (!window.docsearch) {
+  var inputElement = document.getElementById('search-input')
+
+  if (!window.docsearch || !inputElement) {
     return
   }
 
-  var inputElement = document.getElementById('search-input')
   var siteDocsVersion = inputElement.getAttribute('data-docs-version')
 
   document.addEventListener('keydown', function (event) {
@@ -44,7 +45,7 @@
         var currentUrl = getOrigin()
         var liveUrl = 'https://getbootstrap.com/'
 
-        hit.url = currentUrl.lastIndexOf(liveUrl, 0) === 0 ?
+        hit.url = currentUrl.startsWith(liveUrl) ?
           // On production, return the result as is
           hit.url :
           // On development or Netlify, replace `hit.url` with a trailing slash,
